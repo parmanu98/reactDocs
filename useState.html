@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React useState</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+    h1, h2, h3 {
+        color: #2c3e50;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    h2 {
+        margin-top: 30px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 5px;
+    }
+    pre {
+        background: #272822;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+    code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 14px;
+    }
+    p {
+        margin: 10px 0;
+    }
+    ul {
+        margin: 10px 0 20px 20px;
+    }
+    .check {
+        color: green;
+        font-weight: bold;
+    }
+    button {
+        background-color: #3498db;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    button:hover {
+        background-color: #2980b9;
+    }
+    .example-box {
+        background-color: #eaf2f8;
+        padding: 15px;
+        border-left: 5px solid #3498db;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+    .note-box {
+        background-color: #fef9e7;
+        padding: 15px;
+        border-left: 5px solid #f1c40f;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+</style>
+</head>
+<body>
+
+<h1>React <code>useState</code> Hook Guide</h1>
+
+<h2>What is <code>useState</code>?</h2>
+<p>The <code>useState</code> hook allows you to add state to functional components in React. It is an alternative to <code>useReducer</code> for simple state updates.</p>
+
+<p><strong>Syntax:</strong></p>
+<div class="example-box">
+<pre><code>const [state, setState] = useState(initialState)
+
+// state: current value
+// setState: function to update state
+// initialState: initial value</code></pre>
+</div>
+
+<h2>How <code>useState()</code> Works</h2>
+<ol>
+    <li><strong>Initialize State:</strong> Creates a state variable and updater function.<br>
+    <div class="example-box">
+    <pre><code>const [count, setCount] = useState(0);</code></pre>
+    </div>
+    </li>
+
+    <li><strong>State is Preserved Across Renders:</strong> React remembers the state value between re-renders.</li>
+
+    <li><strong>State Updates with Updater Function:</strong> Calling <code>setCount(newValue)</code> updates the state and triggers re-render.</li>
+
+    <li><strong>Triggers Re-render:</strong> Only the component using <code>useState</code> re-renders, keeping the UI updated.</li>
+</ol>
+
+<h2>1. Counter Example</h2>
+<div class="example-box">
+<pre><code>import { useState } from 'react';
+
+export default function Counter() {
+    const [count, setCount] = useState(0);
+
+    function handleClick() {
+        setCount(count + 1);
+    }
+
+    return (
+        &lt;button onClick={handleClick}&gt;
+            Click {count} me
+        &lt;/button&gt;
+    );
+}</code></pre>
+</div>
+
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><code>useState(0)</code>: initializes <code>count</code> with 0.</li>
+    <li><code>setCount(count + 1)</code>: increments the value.</li>
+</ul>
+
+<h2>2. Managing Form Input State</h2>
+<div class="example-box">
+<pre><code>import React, { useState } from 'react';
+
+function Form() {
+    const [name, setName] = useState('');
+    const [age, setAge] = useState('');
+    const [submitted, setSubmitted] = useState(false);
+
+    const handleSubmit = () =&gt; setSubmitted(true);
+
+    return (
+        &lt;div&gt;
+            &lt;input
+                type="text"
+                value={name}
+                onChange={(e) =&gt; setName(e.target.value)}
+                placeholder="Enter your name"
+            /&gt;
+            &lt;input
+                type="number"
+                value={age}
+                onChange={(e) =&gt; setAge(e.target.value)}
+                placeholder="Enter your age"
+            /&gt;
+            &lt;button onClick={handleSubmit}&gt;Submit&lt;/button&gt;
+            {submitted &amp;&amp; &lt;p&gt;Form Submitted!&lt;/p&gt;}
+        &lt;/div&gt;
+    );
+}
+
+export default Form;</code></pre>
+</div>
+
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><code>useState('')</code>: initializes <code>name</code> and <code>age</code> with empty strings.</li>
+    <li>onChange updates the state as the user types.</li>
+    <li>setSubmitted(true): marks the form as submitted.</li>
+</ul>
+
+<h2>Interesting Facts About <code>useState</code></h2>
+<ul>
+    <li>Manages simple state like counters, toggles, and form inputs.</li>
+    <li>Functional updates for previous state: <code>setCount(prev => prev + 1)</code></li>
+    <li>State updates are asynchronous.</li>
+    <li>State does not merge automatically; you need to spread objects manually.</li>
+    <li>Can hold any data type: numbers, strings, objects, arrays, or functions.</li>
+    <li>Lazy initialization: <code>useState(() =&gt; computeInitialValue())</code></li>
+    <li>Re-renders are skipped if state value is the same.</li>
+</ul>
+
+<h2>When to Use <code>useState</code></h2>
+<ul>
+    <li>For simple state management in functional components.</li>
+    <li>When state changes over time.</li>
+    <li>When no complex updates or dependencies are required.</li>
+</ul>
+
+<div class="note-box">
+<p class="check">✅ Key Points to Remember:</p>
+<ul>
+    <li><code>useState</code> returns a state variable and a function to update it.</li>
+    <li>State persists between re-renders.</li>
+    <li>Calling the updater function triggers a re-render of that component.</li>
+</ul>
+</div>
+
+</body>
+</html>

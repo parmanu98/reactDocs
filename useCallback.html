@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React useCallback</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 20px;
+    }
+    h1, h2, h3 {
+        color: #2c3e50;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    h2 {
+        margin-top: 30px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 5px;
+    }
+    pre {
+        background: #272822;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+    code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 14px;
+    }
+    p, li {
+        margin: 10px 0;
+    }
+    ul {
+        margin: 10px 0 20px 20px;
+    }
+    button {
+        background-color: #3498db;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    button:hover {
+        background-color: #2980b9;
+    }
+    .example-box {
+        background-color: #eaf2f8;
+        padding: 15px;
+        border-left: 5px solid #3498db;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+    .note-box {
+        background-color: #fef9e7;
+        padding: 15px;
+        border-left: 5px solid #f1c40f;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+    .check {
+        color: green;
+        font-weight: bold;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 15px 0;
+    }
+    table, th, td {
+        border: 1px solid #ddd;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background-color: #3498db;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<h1>React <code>useCallback</code> Hook Guide</h1>
+
+<h2>1. What is <code>useCallback</code>?</h2>
+<p><code>useCallback</code> is a React Hook that remembers a function so it doesn’t get recreated on every render.</p>
+<ul>
+    <li>Every time a component re-renders, all functions inside it are recreated.</li>
+    <li>If a function is passed as a prop to a child component, this can cause unnecessary re-renders.</li>
+    <li><code>useCallback</code> ensures the function keeps the same reference unless its dependencies change.</li>
+</ul>
+
+<p><strong>Analogy:</strong> Think of a chef in a restaurant. You tell the chef to “make pizza” every time a customer arrives. If nothing has changed, you don’t want the chef to learn the recipe again. <code>useCallback</code> “remembers” the function so it can be reused.</p>
+
+<h2>2. Syntax</h2>
+<div class="example-box">
+<pre><code>const memoizedCallback = useCallback(() => {
+    // function code
+}, [dependencies]);
+
+// First argument: the function to remember
+// Second argument: dependencies array; function recreated only if dependencies change
+// Returns: memoized version of the function</code></pre>
+</div>
+
+<h2>3. Simple Example: Button Click</h2>
+<div class="example-box">
+<pre><code>import React, { useState, useCallback } from "react";
+
+function App() {
+    const [count, setCount] = useState(0);
+    const [text, setText] = useState("");
+
+    // Memoized function
+    const increment = useCallback(() =&gt; {
+        setCount(c =&gt; c + 1);
+    }, []); // no dependencies
+
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;Count: {count}&lt;/h1&gt;
+            &lt;button onClick={increment}&gt;Increment&lt;/button&gt;
+            &lt;input
+                value={text}
+                onChange={e =&gt; setText(e.target.value)}
+                placeholder="Type something"
+            /&gt;
+        &lt;/div&gt;
+    );
+}
+
+export default App;</code></pre>
+</div>
+
+<h2>✅ Step by Step Explanation</h2>
+<ul>
+    <li><strong>increment function:</strong> increases the count.</li>
+    <li>Wrapped in <code>useCallback</code> → React remembers the function between renders.</li>
+    <li>Even if <code>text</code> changes, <code>increment</code> is not recreated because there are no dependencies.</li>
+</ul>
+
+<h2>4. Why is this useful? Example: Child Component</h2>
+<div class="example-box">
+<pre><code>function Child({ onClick }) {
+    console.log("Child rendered");
+    return &lt;button onClick={onClick}&gt;Click me&lt;/button&gt;;
+}
+
+function Parent() {
+    const [count, setCount] = useState(0);
+    const [text, setText] = useState("");
+
+    // Memoized function prevents child re-renders
+    const increment = useCallback(() =&gt; setCount(c =&gt; c + 1), []);
+
+    return (
+        &lt;div&gt;
+            &lt;Child onClick={increment} /&gt;
+            &lt;input value={text} onChange={e =&gt; setText(e.target.value)} /&gt;
+            &lt;p&gt;Count: {count}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+</div>
+
+<p>Without <code>useCallback</code>: Child re-renders every time Parent renders.</p>
+<p>With <code>useCallback</code>: <code>increment</code> keeps the same reference, so Child doesn’t re-render unnecessarily.</p>
+
+<h2>5. Step-by-Step Mental Model (Beginner-Friendly)</h2>
+<ul>
+    <li>Every function in React is recreated on each render.</li>
+    <li>If a function is passed to a child, the child may re-render unnecessarily.</li>
+    <li><code>useCallback</code> “remembers the function” until dependencies change.</li>
+    <li>Helps optimize performance when passing functions as props.</li>
+</ul>
+
+<h2>6. Key Points</h2>
+<ul>
+    <li><strong>useCallback</strong> = memoizing a function</li>
+    <li>Use when:</li>
+    <ul>
+        <li>Passing functions to child components to prevent re-renders.</li>
+        <li>Functions are expensive to recreate (rare case).</li>
+        <li>Include all dependencies that affect the function inside the array.</li>
+    </ul>
+</ul>
+
+<h2>7. Quick Comparison: useMemo vs useCallback</h2>
+<table>
+    <tr>
+        <th>Hook</th>
+        <th>What it remembers</th>
+        <th>When to use</th>
+    </tr>
+    <tr>
+        <td>useMemo</td>
+        <td>A value (number, array, object)</td>
+        <td>When you want to avoid expensive calculations</td>
+    </tr>
+    <tr>
+        <td>useCallback</td>
+        <td>A function</td>
+        <td>When you want to avoid recreating functions unnecessarily</td>
+    </tr>
+</table>
+
+<p><strong>Analogy Recap:</strong></p>
+<ul>
+    <li><code>useMemo</code> → remembers the dish you cooked</li>
+    <li><code>useCallback</code> → remembers the recipe (function) to cook the dish</li>
+</ul>
+
+</body>
+</html>

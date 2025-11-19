@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React useEffect Hook Guide</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 20px;
+    }
+    h1, h2, h3 {
+        color: #2c3e50;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    h2 {
+        margin-top: 30px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 5px;
+    }
+    pre {
+        background: #272822;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+    code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 14px;
+    }
+    p, li {
+        margin: 10px 0;
+    }
+    ul {
+        margin: 10px 0 20px 20px;
+    }
+    .example-box {
+        background-color: #eaf2f8;
+        padding: 15px;
+        border-left: 5px solid #3498db;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+    .note-box {
+        background-color: #fef9e7;
+        padding: 15px;
+        border-left: 5px solid #f1c40f;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background: #3498db;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<h1>React <code>useEffect</code> Hook Guide</h1>
+
+<h2>⭐ What is useEffect?</h2>
+<p><code>useEffect</code> is a React Hook that lets you run some code <strong>after the component renders</strong>.</p>
+<p>Think of it as:</p>
+<p><i>“Hey React, after you finish displaying everything, run this extra code for me.”</i></p>
+
+<h2>⭐ Why do we need useEffect?</h2>
+<p>React components should NOT directly perform actions like:</p>
+<ul>
+    <li>Fetching API data</li>
+    <li>Updating document title</li>
+    <li>Setting timers</li>
+    <li>Subscribing/unsubscribing to services</li>
+</ul>
+
+<p>These are called <strong>side effects</strong>.  
+<code>useEffect</code> is React’s official tool for handling them.</p>
+
+<h2>⭐ Syntax</h2>
+<div class="example-box">
+<pre><code>useEffect(() => {
+    // side effect code here
+}, [dependencies]);</code></pre>
+</div>
+
+<p><strong>First argument:</strong> function → runs your side effect  
+<strong>Second argument:</strong> dependencies → controls WHEN it runs</p>
+
+<h2>⭐ Three Ways to Use useEffect</h2>
+
+<h3>✅ 1. useEffect with empty dependency array → runs ONCE</h3>
+<div class="example-box">
+<pre><code>useEffect(() => {
+    console.log("Runs once when component mounts");
+}, []);</code></pre>
+</div>
+
+<p>Use for:</p>
+<ul>
+    <li>Fetching data on mount</li>
+    <li>Setting up event listeners</li>
+    <li>Starting timers</li>
+</ul>
+
+<h4>Example:</h4>
+<pre><code>function App() {
+    useEffect(() => {
+        console.log("Component loaded");
+    }, []);
+
+    return &lt;h1&gt;Hello&lt;/h1&gt;;
+}</code></pre>
+
+<h3>✔ Runs once  
+✔ Never runs again</h3>
+
+---
+
+<h3>✅ 2. useEffect with dependencies → runs when values change</h3>
+<div class="example-box">
+<pre><code>useEffect(() => {
+    console.log("Runs when count changes");
+}, [count]);</code></pre>
+</div>
+
+<h4>Example:</h4>
+<pre><code>function App() {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        console.log("Count changed:", count);
+    }, [count]);
+
+    return (
+        &lt;button onClick={() => setCount(count + 1)}&gt;
+            Count: {count}
+        &lt;/button&gt;
+    );
+}</code></pre>
+
+<h3>✔ Runs every time count changes  
+✔ Does NOT run when other state changes</h3>
+
+---
+
+<h3>✅ 3. useEffect with NO dependency array → runs on EVERY render</h3>
+
+<pre><code>useEffect(() => {
+    console.log("Runs after every render");
+});</code></pre>
+
+<h4>Example:</h4>
+<pre><code>function App() {
+    const [value, setValue] = useState("");
+
+    useEffect(() => {
+        console.log("Rendered or re-rendered");
+    });
+
+    return (
+        &lt;input value={value} onChange={(e) => setValue(e.target.value)} /&gt;
+    );
+}</code></pre>
+
+<h3>✔ Runs on first render  
+✔ Runs after every update</h3>
+
+---
+
+<h2>⭐ Cleanup Function</h2>
+<p>Some effects need cleanup (like removing event listeners, stopping timers, unsubscribing).</p>
+
+<h3>Syntax:</h3>
+<pre><code>useEffect(() => {
+    // setup code
+
+    return () => {
+        // cleanup code
+    };
+}, []);</code></pre>
+
+<h4>Example: Timer cleanup</h4>
+<pre><code>useEffect(() => {
+    const id = setInterval(() => {
+        console.log("Timer running");
+    }, 1000);
+
+    return () => {
+        clearInterval(id);
+        console.log("Timer cleaned");
+    };
+}, []);</code></pre>
+
+<h3>✔ Prevents memory leaks  
+✔ Runs on unmount</h3>
+
+---
+
+<h2>⭐ Mental Model (Beginner Friendly)</h2>
+
+<table>
+<tr><th>Dependency</th><th>When Effect Runs</th></tr>
+<tr><td>[]</td><td>Only once</td></tr>
+<tr><td>[value]</td><td>Whenever value changes</td></tr>
+<tr><td>No array</td><td>Every render</td></tr>
+</table>
+
+---
+
+<h2>⭐ Real-Life Examples</h2>
+
+<h3>🔹 1. Fetch Data on Mount</h3>
+<pre><code>useEffect(() => {
+    fetch("https://api.example.com/users")
+        .then(res => res.json())
+        .then(data => console.log(data));
+}, []);</code></pre>
+
+<h3>🔹 2. Update page title on count change</h3>
+<pre><code>useEffect(() => {
+    document.title = `Count: ${count}`;
+}, [count]);</code></pre>
+
+<h3>🔹 3. Log every render</h3>
+<pre><code>useEffect(() => {
+    console.log("Rendered");
+});</code></pre>
+
+---
+
+<h2>⭐ When to Use useEffect</h2>
+<ul>
+    <li>Fetching data</li>
+    <li>Timers</li>
+    <li>Event listeners</li>
+    <li>Syncing external services</li>
+    <li>Sync two pieces of state</li>
+</ul>
+
+<h2>⭐ When NOT to use useEffect</h2>
+<ul>
+    <li>Simple calculations</li>
+    <li>Updating state from state in same render</li>
+    <li>Anything that can be computed directly</li>
+</ul>
+
+<h4>❌ Don’t do this:</h4>
+<pre><code>useEffect(() => {
+    setTotal(price * qty);
+}, [price, qty]);</code></pre>
+
+<h4>✔ Instead:</h4>
+<pre><code>const total = price * qty;</code></pre>
+
+---
+
+<h2>⭐ Summary (Super Short)</h2>
+
+<ul>
+    <li><code>useEffect</code> runs side effects after render.</li>
+    <li><strong>[]</strong> → run once</li>
+    <li><strong>[deps]</strong> → run when deps change</li>
+    <li>No deps → run every render</li>
+    <li>Cleanup removes subscriptions/timers</li>
+</ul>
+
+</body>
+</html>

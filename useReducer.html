@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React useReducer Hook Guide</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+        margin: 20px;
+    }
+    h1, h2, h3 {
+        color: #2c3e50;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    h2 {
+        margin-top: 30px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 5px;
+    }
+    pre {
+        background: #272822;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+    code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 14px;
+    }
+    p, li {
+        margin: 10px 0;
+    }
+    ul {
+        margin: 10px 0 20px 20px;
+    }
+    button {
+        background-color: #3498db;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    button:hover {
+        background-color: #2980b9;
+    }
+    .example-box {
+        background-color: #eaf2f8;
+        padding: 15px;
+        border-left: 5px solid #3498db;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+    .note-box {
+        background-color: #fef9e7;
+        padding: 15px;
+        border-left: 5px solid #f1c40f;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+    .check {
+        color: green;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<h1>React <code>useReducer</code> Hook Guide</h1>
+
+<h2>1. What is <code>useReducer</code>?</h2>
+<p><code>useReducer</code> is a React Hook for managing complex state logic in a component. Think of it as an alternative to <code>useState</code> when:</p>
+<ul>
+    <li>You have multiple state values that change together.</li>
+    <li>The state logic is complicated.</li>
+    <li>The next state depends on the previous state.</li>
+</ul>
+
+<p><strong>Analogy:</strong> Imagine your state is like a bank account:</p>
+<ul>
+    <li>You can deposit or withdraw money.</li>
+    <li>Instead of manually updating the balance, you send an action (like “deposit $50”) to a reducer, which decides the new state.</li>
+</ul>
+
+<h2>2. Syntax of <code>useReducer</code></h2>
+<div class="example-box">
+<pre><code>const [state, dispatch] = useReducer(reducer, initialState);
+
+// state → current state
+// dispatch → function to send an action
+// reducer → function that takes (state, action) and returns new state
+// initialState → starting value of state</code></pre>
+</div>
+
+<h2>3. Basic Example: Counter</h2>
+<div class="example-box">
+<pre><code>import React, { useReducer } from "react";
+
+// Step 1: Define reducer
+function reducer(state, action) {
+    switch(action.type) {
+        case "increment":
+            return { count: state.count + 1 };
+        case "decrement":
+            return { count: state.count - 1 };
+        default:
+            return state;
+    }
+}
+
+function App() {
+    // Step 2: Use useReducer
+    const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;Count: {state.count}&lt;/h1&gt;
+            &lt;button onClick={() =&gt; dispatch({ type: "increment" })}&gt;+&lt;/button&gt;
+            &lt;button onClick={() =&gt; dispatch({ type: "decrement" })}&gt;-&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}
+
+export default App;</code></pre>
+</div>
+
+<h2>✅ Explanation:</h2>
+<ul>
+    <li><strong>Reducer function:</strong> Takes <code>state</code> and <code>action</code>, returns new state.</li>
+    <li><strong>useReducer:</strong> <code>state</code> initially is { count: 0 }, <code>dispatch</code> sends actions.</li>
+    <li><strong>Dispatching an action:</strong> <code>dispatch({ type: "increment" })</code> calls the reducer → returns new state → React re-renders.</li>
+</ul>
+
+<h2>4. Why useReducer instead of useState?</h2>
+<p><strong>useState works fine for:</strong></p>
+<pre><code>const [count, setCount] = useState(0);</code></pre>
+<ul>
+    <li>Simple numbers or strings</li>
+    <li>Simple updates</li>
+</ul>
+
+<p><strong>useReducer is better for:</strong></p>
+<ul>
+    <li>Complex state logic</li>
+    <li>Multiple state variables that depend on each other</li>
+    <li>Actions more descriptive than setState</li>
+</ul>
+
+<div class="example-box">
+<pre><code>const initialState = { count: 0, name: "John" };
+
+function reducer(state, action) {
+    switch(action.type) {
+        case "increment":
+            return { ...state, count: state.count + 1 };
+        case "changeName":
+            return { ...state, name: action.payload };
+        default:
+            return state;
+    }
+}</code></pre>
+</div>
+
+<h2>5. Step-by-step mental model</h2>
+<ul>
+    <li><strong>state</strong> = current data (e.g., bank balance)</li>
+    <li><strong>dispatch(action)</strong> = sending an instruction (deposit $50, withdraw $20)</li>
+    <li><strong>reducer(state, action)</strong> = decides how state changes</li>
+    <li>React updates the component with the new state</li>
+</ul>
+<p>Flow: <code>currentState + action → reducer → newState → React re-renders</code></p>
+
+<h2>6. Tiny Example with Multiple Actions</h2>
+<div class="example-box">
+<pre><code>function App() {
+    const initialState = { count: 0, text: "" };
+
+    function reducer(state, action) {
+        switch(action.type) {
+            case "increment": return { ...state, count: state.count + 1 };
+            case "decrement": return { ...state, count: state.count - 1 };
+            case "setText": return { ...state, text: action.payload };
+            default: return state;
+        }
+    }
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    return (
+        &lt;div&gt;
+            &lt;h1&gt;Count: {state.count}&lt;/h1&gt;
+            &lt;input
+                value={state.text}
+                onChange={(e) =&gt; dispatch({ type: "setText", payload: e.target.value })}
+                placeholder="Type something"
+            /&gt;
+            &lt;button onClick={() =&gt; dispatch({ type: "increment" })}&gt;+&lt;/button&gt;
+            &lt;button onClick={() =&gt; dispatch({ type: "decrement" })}&gt;-&lt;/button&gt;
+            &lt;p&gt;Typed Text: {state.text}&lt;/p&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+</div>
+
+<h2>✅ Key Points:</h2>
+<ul>
+    <li>Manage multiple related state variables in a single state object.</li>
+    <li>Every update is done via actions through <code>dispatch</code>.</li>
+    <li>Reducer ensures predictable state updates.</li>
+    <li>Better than multiple useState when state is complex or related.</li>
+</ul>
+
+</body>
+</html>

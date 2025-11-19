@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React useMemo Guide</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+    h1, h2, h3 {
+        color: #2c3e50;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    h2 {
+        margin-top: 30px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 5px;
+    }
+    pre {
+        background: #272822;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+    code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 14px;
+    }
+    p {
+        margin: 10px 0;
+    }
+    ul {
+        margin: 10px 0 20px 20px;
+    }
+    .check {
+        color: green;
+        font-weight: bold;
+    }
+    input[type="number"] {
+        padding: 5px 10px;
+        font-size: 14px;
+        margin-right: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    button {
+        background-color: #3498db;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    button:hover {
+        background-color: #2980b9;
+    }
+    .example-box {
+        background-color: #eaf2f8;
+        padding: 15px;
+        border-left: 5px solid #3498db;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+</style>
+</head>
+<body>
+
+<h1>React <span style="color:aqua">useMemo</span> Guide</h1>
+
+<p>In React, every time a component re-renders, everything inside the component function runs again, including calculations and creating new objects.</p>
+
+<h2>Example:</h2>
+<div class="example-box">
+<pre><code>function App() {
+    const [count, setCount] = React.useState(0);
+
+    const result = Math.random(); // runs every render
+
+    return (
+        &lt;div&gt;
+            &lt;p&gt;Random: {result}&lt;/p&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+</div>
+
+<p>Every time you click the button, <code>result</code> changes because <code>Math.random()</code> runs again.</p>
+<p>Sometimes this is fine, but if the calculation is heavy, it wastes performance.</p>
+<p class="check">✅ <code>useMemo</code> remembers the result until the inputs change.</p>
+
+<h2>2. Basic syntax</h2>
+<pre><code>const memoizedValue = useMemo(() =&gt; computeValue(a, b), [a, b]);</code></pre>
+
+<p><strong>Step by step:</strong></p>
+<ul>
+    <li><code>() =&gt; computeValue(a, b)</code> → Function that calculates the value.</li>
+    <li><code>[a, b]</code> → Dependencies. Recalculation happens only when these change.</li>
+    <li><code>memoizedValue</code> → Cached result.</li>
+</ul>
+
+<h2>3. Simple example: Squaring a number</h2>
+<p>Squaring a number can be “expensive”:</p>
+<div class="example-box">
+<pre><code>function squareNum(num) {
+    console.log("Calculating square...");
+    return num * num;
+}
+
+function App() {
+    const [number, setNumber] = React.useState(0);
+    const [counter, setCounter] = React.useState(0);
+
+    const squared = React.useMemo(() =&gt; squareNum(number), [number]);
+
+    return (
+        &lt;div&gt;
+            &lt;input
+                type="number"
+                value={number}
+                onChange={e =&gt; setNumber(Number(e.target.value))}
+            /&gt;
+            &lt;p&gt;Squared: {squared}&lt;/p&gt;
+            &lt;button onClick={() =&gt; setCounter(counter + 1)}&gt;Counter {counter}&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+</div>
+
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>State:</strong> <code>number</code> from input, <code>counter</code> from button click.</li>
+    <li><strong>useMemo:</strong> Only calculates <code>squareNum(number)</code> when <code>number</code> changes.</li>
+    <li>Changing <code>counter</code> does not recalculate the square.</li>
+</ul>
+
+<h2>4. Objects/Arrays can cause unnecessary re-renders</h2>
+<div class="example-box">
+<pre><code>function Child({ data }) {
+    console.log("Child rendered");
+    return &lt;p&gt;{data.name}&lt;/p&gt;;
+}
+
+function Parent() {
+    const [count, setCount] = React.useState(0);
+
+    const user = { name: "John" }; // new object every render
+
+    return (
+        &lt;div&gt;
+            &lt;Child data={user} /&gt;
+            &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment {count}&lt;/button&gt;
+        &lt;/div&gt;
+    );
+}</code></pre>
+</div>
+
+<p>Even if <code>user.name</code> is the same, <code>Child</code> re-renders because the object is recreated every render.</p>
+<p class="check">✅ Fix with <code>useMemo</code>:</p>
+<pre><code>const user = React.useMemo(() =&gt; ({ name: "John" }), []);</code></pre>
+
+<h2>5. Rules for using <code>useMemo</code></h2>
+<ul>
+    <li>Use for expensive calculations: loops, heavy math, large data.</li>
+    <li>Use for object/array stability: prevent unnecessary child re-renders.</li>
+    <li>Avoid trivial computations: adding 2+2 does not need <code>useMemo</code>.</li>
+    <li>Always include dependencies so React knows when to recalculate.</li>
+</ul>
+
+<h2>6. Mental model (Beginner-friendly)</h2>
+<p>Imagine your component is like a kitchen:</p>
+<ul>
+    <li>You make a dish (calculation).</li>
+    <li>Someone asks for it again.</li>
+    <li>If ingredients (dependencies) haven’t changed, you serve the same dish → <code>useMemo</code>.</li>
+    <li>If ingredients changed, you cook a fresh dish → recalculation.</li>
+</ul>
+<p><strong>Ingredients</strong> = dependencies ([number])</p>
+<p><strong>Dish</strong> = memoized value (squared)</p>
+
+<h2>7. Recap with tiny code</h2>
+<pre><code>const value = React.useMemo(() =&gt; expensiveCalculation(input), [input]);</code></pre>
+<ul>
+    <li>expensiveCalculation → runs only if <code>input</code> changes</li>
+    <li>value → cached result</li>
+</ul>
+<p>Makes React faster and reduces unnecessary child renders.</p>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React useContext Guide</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+    h1, h2, h3 {
+        color: #2c3e50;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    h2 {
+        margin-top: 30px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 5px;
+    }
+    pre {
+        background: #272822;
+        color: #f8f8f2;
+        padding: 15px;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+    code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 14px;
+    }
+    p {
+        margin: 10px 0;
+    }
+    ul {
+        margin: 10px 0 20px 20px;
+    }
+    .check {
+        color: green;
+        font-weight: bold;
+    }
+    button {
+        background-color: #3498db;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    button:hover {
+        background-color: #2980b9;
+    }
+    .example-box {
+        background-color: #eaf2f8;
+        padding: 15px;
+        border-left: 5px solid #3498db;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+    .context-box {
+        background-color: #fef9e7;
+        padding: 15px;
+        border-left: 5px solid #f1c40f;
+        margin: 20px 0;
+        border-radius: 6px;
+    }
+</style>
+</head>
+<body>
+
+<h1>React <code>useContext</code> Guide</h1>
+
+<h2>1. Why do we need <code>useContext</code>?</h2>
+<p>Imagine a family tree of components:</p>
+<pre><code>App
+ └─ Parent
+     └─ Child
+         └─ Grandchild</code></pre>
+
+<p>If <code>App</code> has some data (like a user’s name) that <code>Grandchild</code> needs, normally you’d pass it through props:</p>
+<div class="example-box">
+<pre><code>&lt;App&gt;
+  &lt;Parent userName="John"&gt;
+    &lt;Child userName="John"&gt;
+      &lt;Grandchild userName="John" /&gt;
+    &lt;/Child&gt;
+  &lt;/Parent&gt;
+&lt;/App&gt;</code></pre>
+</div>
+
+<p>This is called <strong>prop drilling</strong> — sending data through multiple levels. <code>useContext</code> lets you skip the drilling and access data directly where you need it.</p>
+
+<hr>
+
+<h2>Step 1: Create a Context</h2>
+<div class="example-box">
+<pre><code>import React, { createContext } from 'react';
+
+const MyContext = createContext(); // Create a global storage</code></pre>
+</div>
+
+<h2>Step 2: Provide a Value</h2>
+<div class="example-box">
+<pre><code>import React, { useState } from 'react';
+
+function App() {
+  const [value, setValue] = useState('Hello, World!');
+
+  return (
+    &lt;MyContext.Provider value={value}&gt;
+      &lt;ChildComponent /&gt;
+    &lt;/MyContext.Provider&gt;
+  );
+}</code></pre>
+</div>
+
+<p><strong>Notes:</strong></p>
+<ul>
+    <li><code>MyContext.Provider</code> wraps the components that need access.</li>
+    <li><code>value</code> is what will be shared globally.</li>
+</ul>
+
+<h2>Step 3: Consume the Context</h2>
+<div class="example-box">
+<pre><code>import React, { useContext } from 'react';
+
+function ChildComponent() {
+  const contextValue = useContext(MyContext);
+  return &lt;h1&gt;{contextValue}&lt;/h1&gt;;
+}</code></pre>
+</div>
+
+<p><code>useContext(MyContext)</code> gives the current value of the context. Any time the value changes, all components using it automatically update.</p>
+
+<hr>
+
+<h2>Example 1: Authentication (Login/Logout)</h2>
+<div class="example-box">
+<pre><code>const AuthContext = createContext();
+
+function AuthProvider({ children }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  return (
+    &lt;AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}&gt;
+      {children}
+    &lt;/AuthContext.Provider&gt;
+  );
+}
+
+function LoginButton() {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  return (
+    &lt;button onClick={() =&gt; setIsLoggedIn(!isLoggedIn)}&gt;
+      {isLoggedIn ? 'Logout' : 'Login'}
+    &lt;/button&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;AuthProvider&gt;
+      &lt;LoginButton /&gt;
+    &lt;/AuthProvider&gt;
+  );
+}</code></pre>
+</div>
+
+<p><strong>Key Points:</strong></p>
+<ul>
+    <li><code>AuthContext</code> holds login state.</li>
+    <li><code>LoginButton</code> can read and update state without props.</li>
+    <li>Click button → login state changes → button text updates automatically.</li>
+</ul>
+
+<hr>
+
+<h2>Example 2: Theme Switching (Light/Dark Mode)</h2>
+<div class="example-box">
+<pre><code>const ThemeContext = createContext();
+
+function ThemeProvider({ children }) {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () =&gt; {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  return (
+    &lt;ThemeContext.Provider value={{ theme, toggleTheme }}&gt;
+      {children}
+    &lt;/ThemeContext.Provider&gt;
+  );
+}
+
+function ThemedComponent() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
+  return (
+    &lt;div style={{
+      background: theme === 'light' ? '#fff' : '#333',
+      color: theme === 'light' ? '#000' : '#fff',
+      padding: '20px',
+      textAlign: 'center'
+    }}&gt;
+      &lt;p&gt;Current Theme: {theme}&lt;/p&gt;
+      &lt;button onClick={toggleTheme}&gt;Toggle Theme&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+
+function App() {
+  return (
+    &lt;ThemeProvider&gt;
+      &lt;ThemedComponent /&gt;
+    &lt;/ThemeProvider&gt;
+  );
+}</code></pre>
+</div>
+
+<p><strong>Key Points:</strong></p>
+<ul>
+    <li><code>ThemeContext</code> stores current theme and a function to switch it.</li>
+    <li><code>ThemedComponent</code> can read theme and toggle it without prop drilling.</li>
+</ul>
+
+<hr>
+
+<h2>✅ Key Points to Remember</h2>
+<div class="context-box">
+<ul>
+    <li><code>createContext()</code> → creates a “global storage”.</li>
+    <li><code>&lt;Context.Provider&gt;</code> → wraps components that can use the context.</li>
+    <li><code>useContext(Context)</code> → lets a component access the context value.</li>
+    <li>Changing context value → all components using it re-render automatically.</li>
+</ul>
+</div>
+
+</body>
+</html>
