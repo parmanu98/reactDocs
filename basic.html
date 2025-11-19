@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Colors -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#6366f1",   // Indigo
+            secondary: "#f43f5e", // Rose
+          }
+        }
+      }
+    }
+  </script>
+
+  <title>React Basics</title>
+</head>
+
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 font-sans">
+
+  <div class="max-w-4xl mx-auto px-6 py-12">
+
+    <!-- Title -->
+    <h1 class="text-4xl md:text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent drop-shadow-lg">
+      🌟 React Basics — Explained Super Simply
+    </h1>
+
+    <!-- CARD COMPONENT -->
+    <div class="space-y-8">
+
+      <!-- Section Card -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-2xl font-bold text-primary mb-3">1. ⭐ What is React?</h2>
+        <p class="leading-relaxed">
+          React is a JavaScript library that helps you build user interfaces (UI) — basically what the user sees on the screen.
+        </p>
+
+        <ul class="mt-3 space-y-1 list-disc list-inside text-gray-300">
+          <li>React is a library, not a framework.</li>
+          <li>Builds reusable UI components.</li>
+          <li>Can be used a little or a lot inside an app.</li>
+          <li>React is declarative — describe what you want, and React updates the screen.</li>
+        </ul>
+      </div>
+
+      <!-- DOM Section -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-2xl font-bold text-primary mb-3">2. 🌳 What is the DOM?</h2>
+        <p>The DOM is the browser’s tree-like structure of HTML elements.</p>
+
+        <pre class="bg-black/40 p-4 rounded-lg text-sm mt-4 overflow-auto border border-white/10">
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;h1&gt;Hello&lt;/h1&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+        </pre>
+
+        <p class="mt-4">
+          Each element is a node in a tree. Updating the DOM can be slow because changing one node may require updating many children.
+        </p>
+      </div>
+
+      <!-- Virtual DOM -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-2xl font-bold text-primary mb-3">3. 🪄 The Virtual DOM</h2>
+        <p>
+          React creates a fast, in-memory copy of the DOM. It updates the real DOM only when needed.
+        </p>
+      </div>
+
+      <!-- Reconciliation -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-2xl font-bold text-primary mb-3">4. 🔁 Reconciliation</h2>
+
+        <ol class="list-decimal list-inside space-y-1">
+          <li>You change state.</li>
+          <li>React creates a new Virtual DOM.</li>
+          <li>Compares with old Virtual DOM.</li>
+          <li>Finds differences.</li>
+          <li>Only updates what changed in the real DOM.</li>
+        </ol>
+      </div>
+
+      <!-- Diffing Algorithm -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-2xl font-bold text-primary mb-3">5. 🔍 Diffing Algorithm</h2>
+        <p>React compares old and new elements to find what changed.</p>
+
+        <ul class="list-disc list-inside space-y-1 mt-2">
+          <li>Different types → considered completely new.</li>
+          <li><code>key</code> helps React track list items.</li>
+        </ul>
+      </div>
+
+      <!-- Components -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-2xl font-bold text-primary mb-3">6. 🧩 React Components</h2>
+        <p>Components are reusable pieces of UI like buttons, cards, or navbars.</p>
+      </div>
+
+      <!-- Functional Components -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-xl font-semibold text-secondary mb-3">6.1 🎉 Functional Components</h2>
+
+        <pre class="bg-black/40 p-4 rounded-lg text-sm border border-white/10">
+function Welcome() {
+  return &lt;h1&gt;Hello!&lt;/h1&gt;;
+}
+        </pre>
+      </div>
+
+      <!-- Class Components -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-xl font-semibold text-secondary mb-3">6.2 🏛️ Class Components</h2>
+
+        <pre class="bg-black/40 p-4 rounded-lg text-sm border border-white/10">
+class Welcome extends React.Component {
+  render() {
+    return &lt;h1&gt;Hello!&lt;/h1&gt;;
+  }
+}
+        </pre>
+      </div>
+
+      <!-- Hooks -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-xl font-semibold text-secondary mb-3">6.3 🤯 Functional vs Class Components</h2>
+
+        <p>Before Hooks:</p>
+        <ul class="list-disc list-inside space-y-1">
+          <li>Functional → ❌ no state</li>
+          <li>Class → ✔ had state</li>
+        </ul>
+
+        <p class="mt-2">After Hooks:</p>
+        <p>Functional components can now use state — they are preferred today.</p>
+      </div>
+
+      <!-- JSX -->
+      <div class="p-6 rounded-xl bg-gray-800/60 backdrop-blur shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-2xl font-bold text-primary mb-3">7. 🔤 JSX</h2>
+
+        <p>JSX looks like HTML but becomes JavaScript under the hood.</p>
+
+        <pre class="bg-black/40 p-4 rounded-lg text-sm border border-white/10 mt-4">
+&lt;h1&gt;Hello&lt;/h1&gt;
+        </pre>
+
+        <p class="mt-2">Without JSX:</p>
+
+        <pre class="bg-black/40 p-4 rounded-lg text-sm border border-white/10">
+React.createElement("h1", null, "Hello");
+        </pre>
+      </div>
+
+      <!-- Summary -->
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-primary/40 to-secondary/40 backdrop-blur shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all border border-white/10">
+
+        <h2 class="text-2xl font-extrabold text-center mb-3 text-white drop-shadow">
+          🎉 Final Summary
+        </h2>
+
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-gray-200">
+          <li><strong>React:</strong> UI library</li>
+          <li><strong>DOM:</strong> Browser tree</li>
+          <li><strong>Virtual DOM:</strong> Faster copy</li>
+          <li><strong>Reconciliation:</strong> Compare & update</li>
+          <li><strong>Diffing:</strong> Detect changes</li>
+          <li><strong>Components:</strong> Reusable UI</li>
+          <li><strong>Functional:</strong> JS functions</li>
+          <li><strong>Class:</strong> Older style</li>
+          <li><strong>JSX:</strong> HTML-like syntax</li>
+        </ul>
+
+        <p class="text-center mt-4 text-lg font-medium">
+          🚀 React builds UI fast using components + Virtual DOM!
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
