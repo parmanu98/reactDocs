@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React.js Hub | State Management</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.collapsible { cursor: pointer; }
+.content { display: none; }
+.active { display: block; }
+</style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+<header class="bg-indigo-600 text-white shadow-md">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+  <h1 class="text-2xl font-bold">React.js Hub</h1>
+  <nav class="space-x-4">
+    <a href="index.html" class="hover:underline">Home</a>
+    <a href="state-management.html" class="hover:underline">State Management</a>
+  </nav>
+</div>
+</header>
+
+<div class="flex max-w-7xl mx-auto mt-6 px-6">
+
+<aside class="w-64 bg-white shadow-md rounded-lg p-4 hidden md:block">
+<h2 class="font-bold text-lg text-indigo-700 mb-4">State Management</h2>
+<ul class="space-y-2 text-gray-700">
+<li><a href="state-management.html" class="hover:text-indigo-600">State Management</a></li>
+</ul>
+</aside>
+
+<main class="flex-1 ml-0 md:ml-6 space-y-6">
+<h1 class="text-3xl font-bold text-indigo-700">State Management in React</h1>
+<p class="text-gray-700">Manage state globally or locally with Context API, Redux, Zustand, and Recoil.</p>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">Context API</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+import { createContext, useContext, useState } from 'react';
+
+const ThemeContext = createContext();
+
+function App() {
+  const [theme, setTheme] = useState('light');
+  return (
+    &lt;ThemeContext.Provider value={{ theme, setTheme }}&gt;
+      &lt;Child /&gt;
+    &lt;/ThemeContext.Provider&gt;
+  );
+}
+
+function Child() {
+  const { theme, setTheme } = useContext(ThemeContext);
+  return &lt;button onClick={() =&gt; setTheme(theme==='light'?'dark':'light')}&gt;Toggle&lt;/button&gt;;
+}
+</pre>
+</div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">Redux (Basic)</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+// store.js
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+const counterSlice = createSlice({
+  name:'counter', initialState:0, reducers:{ increment:state =&gt; state+1 }
+});
+export const { increment } = counterSlice.actions;
+export const store = configureStore({ reducer: counterSlice.reducer });
+
+// component
+import { useSelector, useDispatch } from 'react-redux';
+function Counter() {
+  const count = useSelector(state =&gt; state);
+  const dispatch = useDispatch();
+  return &lt;button onClick={() =&gt; dispatch(increment())&gt;{count}&lt;/button&gt;;
+}
+</pre>
+</div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">Zustand</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+import create from 'zustand';
+const useStore = create(set =&gt; ({ count:0, inc:() =&gt; set(state =&gt; ({ count: state.count+1 })) }));
+function Counter() {
+  const { count, inc } = useStore();
+  return &lt;button onClick={inc}&gt;{count}&lt;/button&gt;;
+}
+</pre>
+</div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">Recoil</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+import { atom, useRecoilState } from 'recoil';
+const countState = atom({ key:'count', default:0 });
+
+function Counter() {
+  const [count, setCount] = useRecoilState(countState);
+  return &lt;button onClick={() =&gt; setCount(count+1)&gt;{count}&lt;/button&gt;;
+}
+</pre>
+</div>
+</section>
+
+</main>
+</div>
+
+<footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">&copy; 2025 React.js Hub</footer>
+
+<script>
+document.querySelectorAll('.collapsible').forEach(item => item.addEventListener('click', () => {
+  const content = item.nextElementSibling;
+  if(content) content.classList.toggle('active');
+}));
+</script>
+
+</body>
+</html>

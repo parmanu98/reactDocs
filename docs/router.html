@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React.js Hub | React Router</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .collapsible { cursor: pointer; }
+    .content { display: none; }
+    .active { display: block; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-indigo-600 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">React.js Hub</h1>
+      <nav class="space-x-4">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="folder-structure.html" class="hover:underline">Folder Structure</a>
+        <a href="commands.html" class="hover:underline">Commands</a>
+        <a href="basics.html" class="hover:underline">Basics</a>
+        <a href="hooks.html" class="hover:underline">Hooks</a>
+        <a href="router.html" class="hover:underline">Router</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="flex max-w-7xl mx-auto mt-6 px-6">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md rounded-lg p-4 hidden md:block">
+      <h2 class="font-bold text-lg text-indigo-700 mb-4">Router</h2>
+      <ul class="space-y-2 text-gray-700">
+        <li><a href="router.html" class="hover:text-indigo-600">React Router</a></li>
+        <li><a href="basics.html" class="hover:text-indigo-600">Basics</a></li>
+        <li><a href="hooks.html" class="hover:text-indigo-600">Hooks</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-0 md:ml-6 space-y-6">
+
+      <h1 class="text-3xl font-bold text-indigo-700">React Router</h1>
+      <p class="text-gray-700">React Router allows navigation between different pages/components in a React app.</p>
+
+      <!-- Basic Routing -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">Basic Routing</div>
+        <div class="content mt-2 pl-4">
+          <p>Setup using <code>BrowserRouter</code> and <code>Route</code> components.</p>
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+
+function App() {
+  return (
+    &lt;BrowserRouter&gt;
+      &lt;Routes&gt;
+        &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+        &lt;Route path="/about" element={&lt;About /&gt;} /&gt;
+      &lt;/Routes&gt;
+    &lt;/BrowserRouter&gt;
+  );
+}
+          </pre>
+        </div>
+      </section>
+
+      <!-- Links -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">Link and NavLink</div>
+        <div class="content mt-2 pl-4">
+          <p>Use <code>Link</code> or <code>NavLink</code> to navigate without page reload.</p>
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+import { Link, NavLink } from 'react-router-dom';
+
+function Navbar() {
+  return (
+    &lt;nav&gt;
+      &lt;Link to="/"&gt;Home&lt;/Link&gt;
+      &lt;NavLink to="/about"&gt;About&lt;/NavLink&gt;
+    &lt;/nav&gt;
+  );
+}
+          </pre>
+        </div>
+      </section>
+
+      <!-- Nested & Dynamic Routes -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">Nested & Dynamic Routes</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+&lt;Route path="/users"&gt;
+  &lt;Route path=":id" element={&lt;UserDetail /&gt;} /&gt;
+&lt;/Route&gt;
+          </pre>
+          <p class="text-gray-700">Dynamic route example: /users/123</p>
+        </div>
+      </section>
+
+      <!-- 404 Page -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">404 Page</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+&lt;Route path="*" element={&lt;NotFound /&gt;} /&gt;
+          </pre>
+          <p class="text-gray-700">Catch-all route for pages that do not exist.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">
+    &copy; 2025 React.js Hub
+  </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const collapsibles = document.querySelectorAll('.collapsible');
+    collapsibles.forEach(item => {
+      item.addEventListener('click', () => {
+        const content = item.nextElementSibling;
+        if(content) content.classList.toggle('active');
+      });
+    });
+  });
+</script>
+
+
+</body>
+</html>

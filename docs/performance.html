@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React.js Hub | Performance</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.collapsible { cursor: pointer; }
+.content { display: none; }
+.active { display: block; }
+</style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+<header class="bg-indigo-600 text-white shadow-md">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<h1 class="text-2xl font-bold">React.js Hub</h1>
+<nav class="space-x-4">
+<a href="index.html" class="hover:underline">Home</a>
+<a href="performance.html" class="hover:underline">Performance</a>
+</nav>
+</div>
+</header>
+
+<div class="flex max-w-7xl mx-auto mt-6 px-6">
+
+<aside class="w-64 bg-white shadow-md rounded-lg p-4 hidden md:block">
+<h2 class="font-bold text-lg text-indigo-700 mb-4">Performance</h2>
+<ul class="space-y-2 text-gray-700">
+<li><a href="performance.html" class="hover:text-indigo-600">Performance Optimization</a></li>
+</ul>
+</aside>
+
+<main class="flex-1 ml-0 md:ml-6 space-y-6">
+<h1 class="text-3xl font-bold text-indigo-700">Performance Optimization in React</h1>
+<p class="text-gray-700">Learn how to optimize React applications for speed and responsiveness.</p>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">React.memo</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+const Expensive = React.memo(({ value }) =&gt; {
+  console.log('Rendering', value);
+  return &lt;div&gt;{value}&lt;/div&gt;;
+});
+</pre>
+<p class="text-gray-700">Prevents re-rendering if props haven't changed.</p>
+</div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">useMemo</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+import { useMemo } from 'react';
+
+const result = useMemo(() =&gt; expensiveCalculation(data), [data]);
+</pre>
+<p class="text-gray-700">Memoizes values to avoid expensive recalculations.</p>
+</div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">useCallback</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+const handleClick = useCallback(() =&gt; { console.log('clicked'); }, []);
+</pre>
+<p class="text-gray-700">Memoizes functions to prevent unnecessary re-renders of children.</p>
+</div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">Lazy Loading & Suspense</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+import React, { lazy, Suspense } from 'react';
+const Component = lazy(() =&gt; import('./Component'));
+
+&lt;Suspense fallback=&lt;div&gt;Loading...&lt;/div&gt;&gt;
+  &lt;Component /&gt;
+&lt;/Suspense&gt;
+</pre>
+<p class="text-gray-700">Load components only when needed to reduce initial bundle size.</p>
+</div>
+</section>
+
+</main>
+</div>
+
+<footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">&copy; 2025 React.js Hub</footer>
+
+<script>
+document.querySelectorAll('.collapsible').forEach(item => item.addEventListener('click', () => {
+  const content = item.nextElementSibling;
+  if(content) content.classList.toggle('active');
+}));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React.js Hub | Basics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .collapsible { cursor: pointer; }
+    .content { display: none; }
+    .active { display: block; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+  <!-- Header / Navbar -->
+  <header class="bg-indigo-600 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">React.js Hub</h1>
+      <nav class="space-x-4">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="folder-structure.html" class="hover:underline">Folder Structure</a>
+        <a href="commands.html" class="hover:underline">Commands</a>
+        <a href="basics.html" class="hover:underline">Basics</a>
+        <a href="hooks.html" class="hover:underline">Hooks</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="flex max-w-7xl mx-auto mt-6 px-6">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md rounded-lg p-4 hidden md:block">
+      <h2 class="font-bold text-lg text-indigo-700 mb-4">Sections</h2>
+      <ul class="space-y-2 text-gray-700">
+        <li><a href="folder-structure.html" class="hover:text-indigo-600">Folder Structure</a></li>
+        <li><a href="commands.html" class="hover:text-indigo-600">Commands</a></li>
+        <li><a href="basics.html" class="hover:text-indigo-600">Basics</a></li>
+        <li><a href="hooks.html" class="hover:text-indigo-600">Hooks</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-0 md:ml-6 space-y-6">
+
+      <h1 class="text-3xl font-bold text-indigo-700">React Basics</h1>
+      <p class="text-gray-700">This page covers the foundational concepts of React, including JSX, Props, State, Event Handling, Conditional Rendering, and Forms.</p>
+
+      <!-- JSX Section -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">JSX</div>
+        <div class="content mt-2 pl-4">
+          <p class="text-gray-700">JSX allows you to write HTML-like code inside JavaScript. Key points:</p>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Use curly braces <code>{}</code> for expressions.</li>
+            <li>Use <code>className</code> instead of <code>class</code>.</li>
+            <li>Elements must be wrapped in a single parent element.</li>
+          </ul>
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+function App() {
+  const name = "React";
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Hello, {name}!&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}
+          </pre>
+        </div>
+      </section>
+
+      <!-- Props Section -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">Props</div>
+        <div class="content mt-2 pl-4">
+          <p class="text-gray-700">Props allow passing data from parent to child components.</p>
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+function Greeting(props) {
+  return &lt;h2&gt;Hello, {props.name}!&lt;/h2&gt;;
+}
+
+function App() {
+  return &lt;Greeting name="Alice" /&gt;;
+}
+          </pre>
+        </div>
+      </section>
+
+      <!-- State Section -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">State</div>
+        <div class="content mt-2 pl-4">
+          <p class="text-gray-700">State allows a component to manage internal data.</p>
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+          </pre>
+        </div>
+      </section>
+
+      <!-- Event Handling Section -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">Event Handling</div>
+        <div class="content mt-2 pl-4">
+          <p class="text-gray-700">React events are handled using camelCase syntax:</p>
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+function Button() {
+  function handleClick() {
+    alert("Button clicked!");
+  }
+
+  return &lt;button onClick={handleClick}&gt;Click Me&lt;/button&gt;;
+}
+          </pre>
+        </div>
+      </section>
+
+      <!-- Conditional Rendering Section -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">Conditional Rendering</div>
+        <div class="content mt-2 pl-4">
+          <p class="text-gray-700">You can render elements conditionally using JavaScript operators.</p>
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+function LoginMessage({ isLoggedIn }) {
+  return (
+    &lt;div&gt;
+      {isLoggedIn ? &lt;p&gt;Welcome back!&lt;/p&gt; : &lt;p&gt;Please log in.&lt;/p&gt;}
+    &lt;/div&gt;
+  );
+}
+          </pre>
+        </div>
+      </section>
+
+      <!-- Forms Section -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-indigo-600">Forms</div>
+        <div class="content mt-2 pl-4">
+          <p class="text-gray-700">Controlled components handle form input via React state.</p>
+          <pre class="bg-gray-100 p-3 rounded text-sm">
+import { useState } from 'react';
+
+function NameForm() {
+  const [name, setName] = useState("");
+
+  return (
+    &lt;form onSubmit={(e) =&gt; { e.preventDefault(); alert(name); }}&gt;
+      &lt;input value={name} onChange={(e) =&gt; setName(e.target.value)} /&gt;
+      &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}
+          </pre>
+          <p class="text-gray-700">Uncontrolled components use <code>ref</code> to access DOM values directly.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">
+    &copy; 2025 React.js Hub
+  </footer>
+
+  <script>
+    const collapsibles = document.querySelectorAll('.collapsible');
+    collapsibles.forEach(item => {
+      item.addEventListener('click', () => {
+        const content = item.nextElementSibling;
+        if(content) content.classList.toggle('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

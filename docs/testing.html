@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React.js Hub | Testing</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+.collapsible { cursor: pointer; }
+.content { display: none; }
+.active { display: block; }
+</style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+<header class="bg-indigo-600 text-white shadow-md">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<h1 class="text-2xl font-bold">React.js Hub</h1>
+<nav class="space-x-4">
+<a href="index.html" class="hover:underline">Home</a>
+<a href="testing.html" class="hover:underline">Testing</a>
+</nav>
+</div>
+</header>
+
+<div class="flex max-w-7xl mx-auto mt-6 px-6">
+
+<aside class="w-64 bg-white shadow-md rounded-lg p-4 hidden md:block">
+<h2 class="font-bold text-lg text-indigo-700 mb-4">Testing</h2>
+<ul class="space-y-2 text-gray-700">
+<li><a href="testing.html" class="hover:text-indigo-600">Testing</a></li>
+</ul>
+</aside>
+
+<main class="flex-1 ml-0 md:ml-6 space-y-6">
+<h1 class="text-3xl font-bold text-indigo-700">Testing React Components</h1>
+<p class="text-gray-700">Use Jest and React Testing Library for unit and snapshot testing.</p>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">Jest</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+// Example test
+test('adds numbers', () =&gt; {
+  expect(1 + 2).toBe(3);
+});
+</pre>
+</div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">React Testing Library</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+import { render, screen, fireEvent } from '@testing-library/react';
+import Counter from './Counter';
+
+test('increments count', () =&gt; {
+  render(&lt;Counter /&gt;);
+  const button = screen.getByRole('button');
+  fireEvent.click(button);
+  expect(button).toHaveTextContent('1');
+});
+</pre>
+</div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+<div class="collapsible font-semibold text-lg text-indigo-600">Snapshot Testing</div>
+<div class="content mt-2 pl-4">
+<pre class="bg-gray-100 p-3 rounded text-sm">
+import renderer from 'react-test-renderer';
+import App from './App';
+
+test('App snapshot', () =&gt; {
+  const tree = renderer.create(&lt;App /&gt;).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+</pre>
+</div>
+</section>
+
+</main>
+</div>
+
+<footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">&copy; 2025 React.js Hub</footer>
+
+<script>
+document.querySelectorAll('.collapsible').forEach(item => item.addEventListener('click', () => {
+  const content = item.nextElementSibling;
+  if(content) content.classList.toggle('active');
+}));
+</script>
+
+</body>
+</html>

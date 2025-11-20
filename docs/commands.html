@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React.js Hub | Commands</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .collapsible { cursor: pointer; }
+    .content { display: none; }
+    .active { display: block; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+  <!-- Header / Navbar -->
+  <header class="bg-indigo-600 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">React.js Hub</h1>
+      <nav class="space-x-4">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="folder-structure.html" class="hover:underline">Folder Structure</a>
+        <a href="commands.html" class="hover:underline">Commands</a>
+        <a href="basics.html" class="hover:underline">Basics</a>
+        <a href="hooks.html" class="hover:underline">Hooks</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="flex max-w-7xl mx-auto mt-6 px-6">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md rounded-lg p-4 hidden md:block">
+      <h2 class="font-bold text-lg text-indigo-700 mb-4">Commands</h2>
+      <ul class="space-y-2 text-gray-700">
+        <li><a href="folder-structure.html" class="hover:text-indigo-600">Folder Structure</a></li>
+        <li><a href="commands.html" class="hover:text-indigo-600">Commands</a></li>
+        <li><a href="basics.html" class="hover:text-indigo-600">Basics</a></li>
+        <li><a href="hooks.html" class="hover:text-indigo-600">Hooks</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 ml-0 md:ml-6 space-y-6">
+
+      <h1 class="text-3xl font-bold text-indigo-700">React.js Commands</h1>
+      <p class="text-gray-700">Here are the most common React commands for development, building, testing, and managing dependencies.</p>
+
+      <!-- Create React App -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-green-700">Create React App</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">npx create-react-app my-app</pre>
+          <p class="text-gray-700">Creates a new React app with default configuration.</p>
+          <pre class="bg-gray-100 p-3 rounded text-sm">yarn create react-app my-app</pre>
+          <p class="text-gray-700">Yarn alternative.</p>
+        </div>
+      </section>
+
+      <!-- Start Development Server -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-green-700">Start Development Server</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">npm start</pre>
+          <pre class="bg-gray-100 p-3 rounded text-sm">yarn start</pre>
+          <p class="text-gray-700">Starts the development server with hot reload at <code>http://localhost:3000</code>.</p>
+        </div>
+      </section>
+
+      <!-- Build Project -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-green-700">Build Project</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">npm run build</pre>
+          <pre class="bg-gray-100 p-3 rounded text-sm">yarn build</pre>
+          <p class="text-gray-700">Generates an optimized production build in the <code>build/</code> folder.</p>
+        </div>
+      </section>
+
+      <!-- Run Tests -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-green-700">Run Tests</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">npm test</pre>
+          <pre class="bg-gray-100 p-3 rounded text-sm">yarn test</pre>
+          <p class="text-gray-700">Starts Jest test runner in watch mode.</p>
+        </div>
+      </section>
+
+      <!-- Install / Remove Packages -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-green-700">Install / Remove Packages</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">npm install package-name</pre>
+          <pre class="bg-gray-100 p-3 rounded text-sm">yarn add package-name</pre>
+          <pre class="bg-gray-100 p-3 rounded text-sm">npm uninstall package-name</pre>
+          <pre class="bg-gray-100 p-3 rounded text-sm">yarn remove package-name</pre>
+          <p class="text-gray-700">Install or remove npm/yarn packages.</p>
+        </div>
+      </section>
+
+      <!-- Linting -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-green-700">Linting</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">npm run lint</pre>
+          <pre class="bg-gray-100 p-3 rounded text-sm">npm run lint -- --fix</pre>
+          <p class="text-gray-700">Check code style and optionally auto-fix issues.</p>
+        </div>
+      </section>
+
+      <!-- Serve Production Build -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-green-700">Serve Production Build</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">npx serve -s build</pre>
+          <p class="text-gray-700">Serve the production build locally.</p>
+        </div>
+      </section>
+
+      <!-- Eject CRA -->
+      <section class="bg-white shadow-md rounded-lg p-4">
+        <div class="collapsible font-semibold text-lg text-green-700">Eject CRA</div>
+        <div class="content mt-2 pl-4">
+          <pre class="bg-gray-100 p-3 rounded text-sm">npm run eject</pre>
+          <p class="text-gray-700">Expose configuration files for advanced customization. Irreversible.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">
+    &copy; 2025 React.js Hub
+  </footer>
+
+  <script>
+    const collapsibles = document.querySelectorAll('.collapsible');
+    collapsibles.forEach(item => {
+      item.addEventListener('click', () => {
+        const content = item.nextElementSibling;
+        if(content) content.classList.toggle('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

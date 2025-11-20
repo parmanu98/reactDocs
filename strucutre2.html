@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive React.js Folder Structure</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .folder { cursor: pointer; }
+    .nested { display: none; }
+    .active { display: block; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-blue-600 text-white py-6 shadow-md">
+    <h1 class="text-3xl font-bold text-center">React.js Folder Structure</h1>
+    <p class="text-center mt-2 text-blue-200">Interactive guide with all default files and detailed explanations</p>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto p-6">
+
+    <ul class="space-y-2">
+
+      <!-- Root Folder -->
+      <li>
+        <div class="folder font-bold text-lg text-blue-700">my-app/</div>
+        <ul class="nested pl-6 space-y-2">
+
+          <!-- node_modules -->
+          <li>
+            <div class="font-semibold">node_modules/</div>
+            <p class="text-gray-600 pl-4">Contains all npm packages and dependencies installed. Auto-generated.</p>
+          </li>
+
+          <!-- public -->
+          <li>
+            <div class="folder font-semibold text-blue-600">public/</div>
+            <ul class="nested pl-6 space-y-2">
+              <li>
+                <div class="font-semibold">index.html</div>
+                <p class="text-gray-600 pl-4">Main HTML template. React mounts the app at &lt;div id="root"&gt;.</p>
+              </li>
+              <li>
+                <div class="font-semibold">favicon.ico</div>
+                <p class="text-gray-600 pl-4">Browser tab icon.</p>
+              </li>
+              <li>
+                <div class="font-semibold">manifest.json</div>
+                <p class="text-gray-600 pl-4">Config for Progressive Web App (PWA).</p>
+              </li>
+              <li>
+                <div class="font-semibold">robots.txt</div>
+                <p class="text-gray-600 pl-4">Instructions for web crawlers.</p>
+              </li>
+              <li>
+                <div class="font-semibold">assets/</div>
+                <p class="text-gray-600 pl-4">Static files like images, icons, fonts.</p>
+              </li>
+            </ul>
+          </li>
+
+          <!-- src -->
+          <li>
+            <div class="folder font-semibold text-blue-600">src/</div>
+            <ul class="nested pl-6 space-y-2">
+
+              <!-- assets -->
+              <li>
+                <div class="font-semibold">assets/</div>
+                <p class="text-gray-600 pl-4">Images, icons, and fonts used in the app.</p>
+              </li>
+
+              <!-- components -->
+              <li>
+                <div class="folder font-semibold text-blue-500">components/</div>
+                <ul class="nested pl-6 space-y-2">
+                  <li>
+                    <div class="font-semibold">Button/</div>
+                    <ul class="nested pl-6">
+                      <li><span class="text-gray-700">Button.js</span> - React component code.</li>
+                      <li><span class="text-gray-700">Button.css</span> - Component-specific styles.</li>
+                      <li><span class="text-gray-700">Button.test.js</span> - Unit tests for Button.</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- pages -->
+              <li>
+                <div class="folder font-semibold text-blue-500">pages/</div>
+                <ul class="nested pl-6 space-y-2">
+                  <li><span class="text-gray-700">Home.js</span> - Home page component.</li>
+                  <li><span class="text-gray-700">About.js</span> - About page component.</li>
+                  <li><span class="text-gray-700">Contact.js</span> - Contact page component.</li>
+                </ul>
+              </li>
+
+              <!-- services -->
+              <li>
+                <div class="folder font-semibold text-blue-500">services/</div>
+                <ul class="nested pl-6 space-y-2">
+                  <li><span class="text-gray-700">api.js</span> - Axios/fetch setup.</li>
+                  <li><span class="text-gray-700">auth.js</span> - Auth API calls.</li>
+                  <li><span class="text-gray-700">user.js</span> - User-related API calls.</li>
+                </ul>
+              </li>
+
+              <!-- hooks -->
+              <li>
+                <div class="folder font-semibold text-blue-500">hooks/</div>
+                <ul class="nested pl-6 space-y-2">
+                  <li><span class="text-gray-700">useAuth.js</span> - Custom hook for authentication.</li>
+                  <li><span class="text-gray-700">useFetch.js</span> - Custom fetch hook.</li>
+                  <li><span class="text-gray-700">useLocalStorage.js</span> - Custom hook for local storage.</li>
+                </ul>
+              </li>
+
+              <!-- contexts -->
+              <li>
+                <div class="folder font-semibold text-blue-500">contexts/</div>
+                <ul class="nested pl-6 space-y-2">
+                  <li><span class="text-gray-700">AuthContext.js</span> - Global auth state.</li>
+                  <li><span class="text-gray-700">ThemeContext.js</span> - Global theme state.</li>
+                </ul>
+              </li>
+
+              <!-- utils -->
+              <li>
+                <div class="folder font-semibold text-blue-500">utils/</div>
+                <ul class="nested pl-6 space-y-2">
+                  <li><span class="text-gray-700">validators.js</span> - Validation helper functions.</li>
+                  <li><span class="text-gray-700">formatDate.js</span> - Date formatting helpers.</li>
+                  <li><span class="text-gray-700">constants.js</span> - App constants.</li>
+                </ul>
+              </li>
+
+              <!-- Default files -->
+              <li><span class="text-gray-700">App.js</span> - Main component wrapping the app.</li>
+              <li><span class="text-gray-700">App.css</span> - Styles for App.js.</li>
+              <li><span class="text-gray-700">index.js</span> - Entry point, renders App to root.</li>
+              <li><span class="text-gray-700">index.css</span> - Global CSS styles.</li>
+              <li><span class="text-gray-700">logo.svg</span> - React logo (default). </li>
+              <li><span class="text-gray-700">reportWebVitals.js</span> - Performance measuring utility.</li>
+              <li><span class="text-gray-700">setupTests.js</span> - Jest and React Testing Library setup.</li>
+
+            </ul>
+          </li>
+
+          <!-- Config files -->
+          <li><span class="text-gray-700">.gitignore</span> - Git ignore file.</li>
+          <li><span class="text-gray-700">package.json</span> - Project metadata, dependencies, scripts.</li>
+          <li><span class="text-gray-700">package-lock.json / yarn.lock</span> - Locks package versions.</li>
+          <li><span class="text-gray-700">README.md</span> - Project documentation.</li>
+          <li><span class="text-gray-700">.env</span> - Environment variables.</li>
+
+        </ul>
+      </li>
+
+    </ul>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">
+    &copy; 2025 Interactive React Folder Structure
+  </footer>
+
+  <!-- JavaScript for collapsible folders -->
+  <script>
+    const folders = document.querySelectorAll('.folder');
+    folders.forEach(folder => {
+      folder.addEventListener('click', () => {
+        const nested = folder.nextElementSibling;
+        if (nested) {
+          nested.classList.toggle('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

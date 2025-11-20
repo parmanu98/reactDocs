@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete React.js Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .folder, .cmd-header, .tip-header { cursor: pointer; }
+    .nested, .cmd-details, .tip-details { display: none; }
+    .active { display: block; }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-indigo-600 text-white py-6 shadow-md">
+    <h1 class="text-3xl font-bold text-center">Complete React.js Guide</h1>
+    <p class="text-center mt-2 text-indigo-200">Folder structure, commands, and workflow tips</p>
+  </header>
+
+  <main class="max-w-7xl mx-auto p-6 space-y-8">
+
+    <!-- Folder Structure -->
+    <section class="bg-white rounded-lg shadow p-6">
+      <div class="folder font-bold text-lg text-indigo-700">React Folder Structure</div>
+      <ul class="nested pl-4 mt-2 space-y-2">
+
+        <!-- Root -->
+        <li>
+          <div class="folder font-semibold text-indigo-600">my-app/</div>
+          <ul class="nested pl-6 space-y-2">
+            <li>
+              <div class="font-semibold">node_modules/</div>
+              <p class="text-gray-600 pl-4">Contains all npm packages and dependencies.</p>
+            </li>
+            <li>
+              <div class="folder font-semibold text-indigo-500">public/</div>
+              <ul class="nested pl-6 space-y-2">
+                <li><span class="text-gray-700">index.html</span> – Main HTML template.</li>
+                <li><span class="text-gray-700">favicon.ico</span> – Browser tab icon.</li>
+                <li><span class="text-gray-700">manifest.json</span> – PWA configuration.</li>
+                <li><span class="text-gray-700">robots.txt</span> – Crawlers instructions.</li>
+                <li><span class="text-gray-700">assets/</span> – Images, fonts, icons.</li>
+              </ul>
+            </li>
+            <li>
+              <div class="folder font-semibold text-indigo-500">src/</div>
+              <ul class="nested pl-6 space-y-2">
+                <li><span class="text-gray-700">App.js</span> – Main app component.</li>
+                <li><span class="text-gray-700">App.css</span> – Styles for App.js.</li>
+                <li><span class="text-gray-700">index.js</span> – Entry point.</li>
+                <li><span class="text-gray-700">index.css</span> – Global CSS.</li>
+                <li><span class="text-gray-700">logo.svg</span> – React logo.</li>
+                <li><span class="text-gray-700">reportWebVitals.js</span> – Performance metrics.</li>
+                <li><span class="text-gray-700">setupTests.js</span> – Test setup.</li>
+                <li>
+                  <div class="folder text-indigo-500">components/</div>
+                  <ul class="nested pl-6">
+                    <li>
+                      <div class="font-semibold">Button/</div>
+                      <ul class="nested pl-6">
+                        <li>Button.js – Component code</li>
+                        <li>Button.css – Component styles</li>
+                        <li>Button.test.js – Component tests</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="folder text-indigo-500">pages/</div>
+                  <ul class="nested pl-6">
+                    <li>Home.js – Home page</li>
+                    <li>About.js – About page</li>
+                    <li>Contact.js – Contact page</li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="folder text-indigo-500">services/</div>
+                  <ul class="nested pl-6">
+                    <li>api.js – Axios/fetch setup</li>
+                    <li>auth.js – Auth API calls</li>
+                    <li>user.js – User API calls</li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="folder text-indigo-500">hooks/</div>
+                  <ul class="nested pl-6">
+                    <li>useAuth.js – Authentication hook</li>
+                    <li>useFetch.js – Fetch hook</li>
+                    <li>useLocalStorage.js – LocalStorage hook</li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="folder text-indigo-500">contexts/</div>
+                  <ul class="nested pl-6">
+                    <li>AuthContext.js – Auth state</li>
+                    <li>ThemeContext.js – Theme state</li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="folder text-indigo-500">utils/</div>
+                  <ul class="nested pl-6">
+                    <li>validators.js – Validation helpers</li>
+                    <li>formatDate.js – Date helpers</li>
+                    <li>constants.js – App constants</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Config files -->
+            <li><span class="text-gray-700">.gitignore</span></li>
+            <li><span class="text-gray-700">package.json</span></li>
+            <li><span class="text-gray-700">package-lock.json / yarn.lock</span></li>
+            <li><span class="text-gray-700">README.md</span></li>
+            <li><span class="text-gray-700">.env</span></li>
+
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <!-- React Commands -->
+    <section class="bg-white rounded-lg shadow p-6">
+      <div class="cmd-header font-bold text-lg text-green-700">React Commands</div>
+      <ul class="cmd-details pl-4 mt-2 space-y-2">
+
+        <li>
+          <div class="font-semibold">Create React App</div>
+          <p class="text-gray-700 pl-4">
+            <code>npx create-react-app my-app</code> – Create a new React project.<br>
+            <code>yarn create react-app my-app</code> – Yarn alternative.
+          </p>
+        </li>
+
+        <li>
+          <div class="font-semibold">Start Development Server</div>
+          <p class="text-gray-700 pl-4">
+            <code>npm start</code> or <code>yarn start</code> – Runs dev server with hot reload.
+          </p>
+        </li>
+
+        <li>
+          <div class="font-semibold">Build Project</div>
+          <p class="text-gray-700 pl-4">
+            <code>npm run build</code> or <code>yarn build</code> – Build optimized production-ready code.
+          </p>
+        </li>
+
+        <li>
+          <div class="font-semibold">Run Tests</div>
+          <p class="text-gray-700 pl-4">
+            <code>npm test</code> or <code>yarn test</code> – Run Jest tests in watch mode.
+          </p>
+        </li>
+
+        <li>
+          <div class="font-semibold">Install / Remove Packages</div>
+          <p class="text-gray-700 pl-4">
+            <code>npm install package-name</code> / <code>yarn add package-name</code> – Install packages.<br>
+            <code>npm uninstall package-name</code> / <code>yarn remove package-name</code> – Remove packages.
+          </p>
+        </li>
+
+        <li>
+          <div class="font-semibold">Linting</div>
+          <p class="text-gray-700 pl-4">
+            <code>npm run lint</code> – Check code style.<br>
+            <code>npm run lint -- --fix</code> – Automatically fix issues.
+          </p>
+        </li>
+
+        <li>
+          <div class="font-semibold">Serve Production</div>
+          <p class="text-gray-700 pl-4">
+            <code>npx serve -s build</code> – Serve production build locally.
+          </p>
+        </li>
+
+        <li>
+          <div class="font-semibold">Eject CRA</div>
+          <p class="text-gray-700 pl-4">
+            <code>npm run eject</code> – Exposes configuration files. Irreversible.
+          </p>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- Workflow / Best Practices -->
+    <section class="bg-white rounded-lg shadow p-6">
+      <div class="tip-header font-bold text-lg text-purple-700">React Workflow Tips & Best Practices</div>
+      <ul class="tip-details pl-4 mt-2 list-disc list-inside space-y-2 text-gray-700">
+        <li>Use **component-first approach**: Keep reusable components separate from pages.</li>
+        <li>Use **feature-based grouping** for large apps (each feature has components, services, and styles).</li>
+        <li>Keep **src clean**; avoid dumping files at top-level.</li>
+        <li>Use **PascalCase** for components, **camelCase** for hooks/utilities.</li>
+        <li>Keep CSS close to components using **CSS Modules, SCSS, or Tailwind classes**.</li>
+        <li>Use **Context API or Redux** for global state management instead of prop drilling.</li>
+        <li>Write **unit tests** for components and custom hooks.</li>
+        <li>Use **eslint + prettier** for consistent code formatting.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">
+    &copy; 2025 Complete React.js Guide
+  </footer>
+
+  <!-- JavaScript for collapsible sections -->
+  <script>
+    // Folder structure
+    const folders = document.querySelectorAll('.folder');
+    folders.forEach(folder => {
+      folder.addEventListener('click', () => {
+        const nested = folder.nextElementSibling;
+        if(nested) nested.classList.toggle('active');
+      });
+    });
+
+    // Commands
+    const cmds = document.querySelectorAll('.cmd-header');
+    cmds.forEach(cmd => {
+      cmd.addEventListener('click', () => {
+        const details = cmd.nextElementSibling;
+        if(details) details.classList.toggle('active');
+      });
+    });
+
+    // Tips
+    const tips = document.querySelectorAll('.tip-header');
+    tips.forEach(tip => {
+      tip.addEventListener('click', () => {
+        const details = tip.nextElementSibling;
+        if(details) details.classList.toggle('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>React.js Hub | Styling</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .collapsible { cursor: pointer; }
+  .content { display: none; }
+  .active { display: block; }
+</style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+<header class="bg-indigo-600 text-white shadow-md">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">React.js Hub</h1>
+    <nav class="space-x-4">
+      <a href="index.html" class="hover:underline">Home</a>
+      <a href="styling.html" class="hover:underline">Styling</a>
+    </nav>
+  </div>
+</header>
+
+<div class="flex max-w-7xl mx-auto mt-6 px-6">
+
+<aside class="w-64 bg-white shadow-md rounded-lg p-4 hidden md:block">
+  <h2 class="font-bold text-lg text-indigo-700 mb-4">Styling</h2>
+  <ul class="space-y-2 text-gray-700">
+    <li><a href="styling.html" class="hover:text-indigo-600">Styling in React</a></li>
+  </ul>
+</aside>
+
+<main class="flex-1 ml-0 md:ml-6 space-y-6">
+<h1 class="text-3xl font-bold text-indigo-700">Styling in React</h1>
+<p class="text-gray-700">React supports multiple ways to style components.</p>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+  <div class="collapsible font-semibold text-lg text-indigo-600">CSS Files</div>
+  <div class="content mt-2 pl-4">
+    <pre class="bg-gray-100 p-3 rounded text-sm">
+/* App.css */
+.app { background-color: #f0f0f0; }
+    </pre>
+    <p class="text-gray-700">Import CSS directly into components using <code>import './App.css'</code>.</p>
+  </div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+  <div class="collapsible font-semibold text-lg text-indigo-600">CSS Modules</div>
+  <div class="content mt-2 pl-4">
+    <pre class="bg-gray-100 p-3 rounded text-sm">
+/* Button.module.css */
+.button { background: blue; color: white; }
+
+import styles from './Button.module.css';
+&lt;button className={styles.button}&gt;Click&lt;/button&gt;
+    </pre>
+  </div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+  <div class="collapsible font-semibold text-lg text-indigo-600">Styled Components</div>
+  <div class="content mt-2 pl-4">
+    <pre class="bg-gray-100 p-3 rounded text-sm">
+import styled from 'styled-components';
+
+const Button = styled.button`
+  background: green;
+  color: white;
+  padding: 0.5rem 1rem;
+`;
+
+&lt;Button&gt;Click&lt;/Button&gt;
+    </pre>
+  </div>
+</section>
+
+<section class="bg-white shadow-md rounded-lg p-4">
+  <div class="collapsible font-semibold text-lg text-indigo-600">Tailwind CSS</div>
+  <div class="content mt-2 pl-4">
+    <pre class="bg-gray-100 p-3 rounded text-sm">
+&lt;button className="bg-indigo-600 text-white px-4 py-2 rounded"&gt;Click&lt;/button&gt;
+    </pre>
+    <p class="text-gray-700">Utility-first CSS for rapid styling.</p>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer class="bg-gray-200 py-4 mt-12 text-center text-gray-700">&copy; 2025 React.js Hub</footer>
+
+<script>
+const collapsibles = document.querySelectorAll('.collapsible');
+collapsibles.forEach(item => item.addEventListener('click', () => {
+  const content = item.nextElementSibling;
+  if(content) content.classList.toggle('active');
+}));
+</script>
+
+</body>
+</html>
